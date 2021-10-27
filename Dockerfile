@@ -4,9 +4,10 @@
 # # RUN pip3 install certbot
 # RUN apk add --no-cache certbot
 
-FROM certbot/certbot
+#FROM certbot/certbot
+FROM ubuntu:focal
 
-RUN apt update && apt install -y curl sudo
+RUN apt update && apt install -y curl sudo certbot
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 RUN export KUBEDIR=$HOME/aks-bin
 RUN mkdir $KUBEDIR
