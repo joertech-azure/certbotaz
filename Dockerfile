@@ -8,7 +8,7 @@
 FROM ubuntu:focal
 
 RUN df -h
-RUN apt update && apt install -y certbot azure-cli
+RUN apt update && apt install -y certbot azure-cli && apt-get -y clean && rm -rf /var/lib/apt/lists/*
 # RUN apt update && apt install -y certbot curl
 #
 # RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
@@ -18,7 +18,7 @@ RUN apt update && apt install -y certbot azure-cli
 #
 # RUN az aks install-cli
 
-RUN rm -rf /var/lib/apt/lists/*
+# RUN rm -rf /var/lib/apt/lists/*
 RUN df -h
 
 #ENV PATH=/home/aks-bin:$PATH
