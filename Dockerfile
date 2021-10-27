@@ -11,11 +11,10 @@ RUN df -h
 RUN apt update && apt install -y curl sudo certbot
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 RUN export KUBEDIR=/home/aks-bin ;\
-    mkdir $KUBEDIR ;\
-    export PATH=$PATH:$KUBEDIR ;\
+    mkdir -p $KUBEDIR ;\
     az aks install-cli --install-location=$KUBEDIR/kubectl --kubelogin-install-location=$KUBEDIR/kubelogin ;\
-    ;
-    
+
+
 RUN apt purge -y curl sudo && rm -rf /var/lib/apt/lists/*
 RUN df -h
 
