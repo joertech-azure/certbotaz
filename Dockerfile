@@ -23,7 +23,7 @@ RUN df -h
 
 #ENV PATH=/home/aks-bin:$PATH
 
-RUN mkdir /etc/letsencrypt
+RUN mkdir -p /etc/letsencrypt
 COPY ./* /home/
 RUN chmod -R a+x /home/*.sh
 # The following expects the env variables DOMAIN, EMAIL and AKV
