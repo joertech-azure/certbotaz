@@ -8,15 +8,15 @@
 FROM ubuntu:focal
 
 RUN df -h
-#RUN apt update && apt install -y certbot azure-cli
-RUN apt update && apt install -y certbot curl
-
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-# RUN export KUBEDIR=/home/aks-bin ;\
-#     mkdir -p $KUBEDIR ;\
-#     az aks install-cli --install-location=$KUBEDIR/kubectl --kubelogin-install-location=$KUBEDIR/kubelogin
-
-RUN az aks install-cli
+RUN apt update && apt install -y certbot azure-cli
+# RUN apt update && apt install -y certbot curl
+#
+# RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+# # RUN export KUBEDIR=/home/aks-bin ;\
+# #     mkdir -p $KUBEDIR ;\
+# #     az aks install-cli --install-location=$KUBEDIR/kubectl --kubelogin-install-location=$KUBEDIR/kubelogin
+#
+# RUN az aks install-cli
 
 RUN rm -rf /var/lib/apt/lists/*
 RUN df -h
