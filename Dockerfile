@@ -5,5 +5,6 @@ FROM mcr.microsoft.com/azure-cli
 RUN apk add --no-cache certbot
 RUN mkdir /etc/letsencrypt
 COPY ./* /home/
+RUN chmod -R a+x /home/*.sh
 # The following expects the env variables DOMAIN, EMAIL and AKV
 CMD ["bash", "-c", "/home/certbot_generate.sh"]
