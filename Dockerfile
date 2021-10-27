@@ -6,12 +6,14 @@
 
 FROM certbot/certbot
 
+RUN apt update && apt install -y curl sudo
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 RUN export KUBEDIR=$HOME/aks-bin
 RUN mkdir $KUBEDIR
 RUN export PATH=$PATH:$KUBEDIR
 RUN az aks install-cli --install-location=$KUBEDIR/kubectl --kubelogin-install-location=$KUBEDIR/kubelogin
 
+RUN apt purge -y curl sudo && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /etc/letsencrypt
 COPY ./* /home/
