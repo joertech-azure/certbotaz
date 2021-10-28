@@ -21,5 +21,5 @@ echo " - DNS RG:             $DNS_ZONE_RG"
 SUFFIX=".${DNS_ZONE_NAME}"
 RECORD_NAME=_acme-challenge.${CERTBOT_DOMAIN%"$SUFFIX"}
 echo "Creating record $RECORD_NAME in DNS zone $DNS_ZONE_NAME..."
-az network dns record-set txt create -n "$RECORD_NAME" -z "$DNS_ZONE_NAME" -g $DNS_ZONE_RG --ttl 30
+az network dns record-set txt create -n "$RECORD_NAME" -z "$DNS_ZONE_NAME" -g "$DNS_ZONE_RG" --ttl 30
 az network dns record-set txt add-record -n "$RECORD_NAME" -z "$DNS_ZONE_NAME" -g "$DNS_ZONE_RG" -v "$CERTBOT_VALIDATION"
