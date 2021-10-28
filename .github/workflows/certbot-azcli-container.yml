@@ -12,7 +12,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: 'certbotaz'
-#  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
@@ -27,10 +26,7 @@ jobs:
 
 #      - name: Log in to the Container registry
 #        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-#        with:
-#          registry: ${{ env.REGISTRY }}
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -46,6 +42,9 @@ jobs:
         uses: docker/metadata-action@v2
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}
+          #tags: |
+          #  type=raw,value=latest
+          #  type=sha
 
       - name: Build and push Docker image
         #uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc

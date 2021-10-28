@@ -27,5 +27,14 @@ cert_name=$(echo $DOMAIN | tr -d '.')
 # Combine PEM and key in one pfx file (pkcs#12)
 pfx_file=".${pem_file}.pfx"
 openssl pkcs12 -export -in $pem_file -inkey $key_file -out $pfx_file -passin pass:$key_password -passout pass:$key_password
+#
+if [[ "$KEYVAULT_SID" == "" ]] ;
+then
+  echo "WARNING: No KEYVAULT_SID env var is provided!"
+  echo "         assuming DNS Zone file and keyvault are in the same subscription."
+else
+  echo "Keyvault subscription id provided: $KEYVAULT_SID"
+  az account set -s "$KEYVAULT_SID"
+fi
 # Add certificate
 az keyvault certificate import --vault-name "$AKV" -n "$cert_name" -f $pfx_file
