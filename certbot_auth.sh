@@ -1,6 +1,18 @@
 #!/bin/bash
 echo "Logging to Azure..."
-az login --identity
+
+if [[ "$SP_ID" == "" ]] ;
+then
+  echo "Service principal is not given, assuming we are running under managed identity."
+  az login --identity
+else
+  if [[ "$SP_PASS" == "" ]] ; then echo "WARNING: SP_PASS is not provided!" ; fi
+  if [[ "$SP_TENANT" == "" ]] ; then echo "WARNING: SP_TENANT is not provided!" ; fi
+
+  echo "Using Service principal $SP_SID to login."
+  az login login --service-principal -u "$SP_ID" --password "$SP_PASS" --tenant "$SP_TENANT"
+fi
+
 if [[ "$DNS_SID" == "" ]] ;
 then
   echo "WARNING: No DNS_SID env var is provided!"

@@ -3,17 +3,34 @@
 
 based on erjosito/certbot-azcli repository. 
 
-- removed -dev packages after installing of certbot, restulting conatainer image got reduced in size from 850 MB to 65MB.
+- Removed -dev packages after installation of certbot, restulting conatainer image got reduced in size from 850 MB to 65MB.
 
-- with an addition of possibility for dns-zonefile to be in a different subscription as where certbotaz container will be runnning and keyvault will be stored.
+- With an addition of possibility for dns-zonefile to be in a different subscription as where certbotaz container will be runnning and keyvault will be stored.
 
-Additional environment variables can be provided to the containder: 
+- Can now also authenticate to azure via Service Principal, provided as an environment variable. 
+
+- So now, using Service Principal auth ( instead of azure managed identity), it can also run in kubernetes, or localy in docker. 
+
+Additional, optional environment variables can be provided to the containder: 
+
+- To have DNS zone file and Keyvault in two different subscriptions: 
 
 `DNS_SID=....`  - Azure Subscription id, of DNS Zone file, to do the dns-acme.
 
 `KEYVAULT_SID=....`   - Azure Subscription id, of keyvault, to store the certificate.
 
- 
+- To make use of Service Principal auth, instead of azure managed identity: 
+
+$SP_ID" --password "$SP_PASS" --tenant "$SP_TENANT"
+
+`SP_ID=....`  - Service Principal ID.
+
+`SP_PASS=....`   - Service Principal PASSWORD.
+
+`SP_TENANT=....`  - TENANT to be used to access azure resources.
+
+-------------
+
 Certbotaz container can be deployed as an azure container, for exmaple with terraform:
 
 
@@ -73,4 +90,17 @@ resource "azurerm_container_group" "certbotaz" {
     }
 }
 
+</PRE>
+
+-----------------
+
+To run it in docker: 
+
+<PRE>
+echo "DOMAIN=some-domain" >> myenv
+echo "EMAIL=some-email_to_register_certificate" >> myenv
+echo "AKV=some-keyvaultname" >> myenv
+
+docker pull "ghcr.io/joertech-azure/certbotaz/certbotaz:main"
+docker run --env-file myenv certbotaz:main
 </PRE>
