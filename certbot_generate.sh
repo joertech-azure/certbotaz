@@ -7,13 +7,13 @@ if [[ "$STAGING" == "yes" ]]
 then
     echo "Generating cert in staging server..."
     certbot certonly -n -d "$DOMAIN" --manual -m "$EMAIL" --preferred-challenges=dns \
-        --config-dir ${HHOME}/config --work-dir ${HHOME}/work --logs-dir ${HHOME}/log \
+        --config-dir ${HHOME}/config --work-dir ${HHOME}/work --logs-dir ${HHOME}/logs \
         --staging --manual-public-ip-logging-ok --agree-tos \
         --manual-auth-hook ${HHOME}/certbot_auth.sh --manual-cleanup-hook ${HHOME}/certbot_cleanup.sh
 else
     echo "Generating cert in production server..."
     certbot certonly -n -d "$DOMAIN" --manual -m "$EMAIL" --preferred-challenges=dns \
-        --config-dir ${HHOME}/config --work-dir ${HHOME}/work --logs-dir ${HHOME}/log \
+        --config-dir ${HHOME}/config --work-dir ${HHOME}/work --logs-dir ${HHOME}/logs \
         --manual-public-ip-logging-ok --agree-tos \
         --manual-auth-hook ${HHOME}/certbot_auth.sh --manual-cleanup-hook ${HHOME}/certbot_cleanup.sh
 fi
