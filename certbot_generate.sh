@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Create certificate (optionally using the staging server)
 if [[ "$STAGING" == "yes" ]]
 then
@@ -24,6 +25,7 @@ fi
 pem_file="/etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
 key_file="/etc/letsencrypt/live/${DOMAIN}/privkey.pem"
 cert_name=$(echo "$DOMAIN" | tr -d '.')
+
 # Combine PEM and key in one pfx file (pkcs#12)
 pfx_file=".${pem_file}.pfx"
 openssl pkcs12 -export -in "$pem_file" -inkey "$key_file" -out "$pfx_file" -passin pass:"$key_password" -passout pass:"$key_password"
@@ -37,5 +39,10 @@ else
   az account set -s "$KEYVAULT_SID"
 fi
 # Add certificate
+if [[ "$DEBUG" == "yes" ]]
+then
+  echo "Keyvault name to use: $AKV"
+  echo "CertName to create: $cert_name"
+fi
 az keyvault certificate import --vault-name "$AKV" -n "$cert_name" -f "$pfx_file"
 
