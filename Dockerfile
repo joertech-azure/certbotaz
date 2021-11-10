@@ -18,11 +18,14 @@ RUN apk add python3 python3-dev py3-pip build-base libressl-dev musl-dev libffi-
 #
 #ENV PATH=/home/aks-bin:$PATH
 
-COPY ./* /home/
-RUN chmod -R a+x /home/*.sh ;\
-    adduser -D crtbot ;\
+COPY ./*.sh ./*.md /home/
+RUN adduser -D crtbot ;\
+    mv /home/*.sh /home/*.md /home/crtbot ;\
+    chmod -R a+x /home/crtbot/*.sh ;\
+    mkdir -p /home/crtbot/logs ;\
+    mkdir -p /home/crtbot/config ;\
+    mkdir -p /home/crtbot/work ;\
     mkdir -p /etc/letsencrypt ; \
-    chown -R crtbot:root /home ; \
     chown -R crtbot:root /etc/letsencrypt
 
 USER crtbot
