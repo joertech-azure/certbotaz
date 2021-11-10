@@ -22,7 +22,7 @@ COPY ./* /home/
 RUN chmod -R a+x /home/*.sh ;\
     adduser -D crtbot ;\
     mkdir -p /etc/letsencrypt ; \
-    chown -R crtbot:root /home
+    chown -R crtbot:root /home ; \
     chown -R crtbot:root /etc/letsencrypt
 
 USER crtbot
