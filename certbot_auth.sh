@@ -10,7 +10,7 @@ else
   if [[ "$SP_TENANT" == "" ]] ; then echo "WARNING: SP_TENANT is not provided!" ; fi
 
   echo "Using Service principal $SP_SID to login."
-  az login login --service-principal -u "$SP_ID" --password "$SP_PASS" --tenant "$SP_TENANT"
+  az login --service-principal -u "$SP_ID" --password "$SP_PASS" --tenant "$SP_TENANT"
 fi
 
 if [[ "$DNS_SID" == "" ]] ;
