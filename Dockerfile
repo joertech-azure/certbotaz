@@ -24,13 +24,11 @@ RUN adduser -D crtbot ;\
     mv /home/*.sh /home/*.md /home/crtbot/ ;\
     chmod -R a+x /home/crtbot/*.sh ;\
     mkdir -p /home/crtbot/logs ;\
-    mkdir -p /home/crtbot/config ;\
+    mkdir -p /home/crtbot/letsencrypt ;\
     mkdir -p /home/crtbot/work ;\
-    mkdir -p /etc/letsencrypt ; \
     chown -R crtbot:crtbot /home/crtbot/logs ;\
-    chown -R crtbot:crtbot /home/crtbot/config ;\
-    chown -R crtbot:crtbot /home/crtbot/work ;\
-    chown -R crtbot:root /etc/letsencrypt
+    chown -R crtbot:crtbot /home/crtbot/letsencrypt ;\
+    chown -R crtbot:crtbot /home/crtbot/work ;
 
 USER crtbot
 

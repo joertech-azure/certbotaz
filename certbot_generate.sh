@@ -7,31 +7,31 @@ if [[ "$STAGING" == "yes" ]]
 then
     echo "Generating cert in staging server..."
     certbot certonly -n -d "$DOMAIN" --manual -m "$EMAIL" --preferred-challenges=dns \
-        --config-dir ${HHOME}/config --work-dir ${HHOME}/work --logs-dir ${HHOME}/logs \
+        --config-dir ${HHOME}/letsencrypt --work-dir ${HHOME}/work --logs-dir ${HHOME}/logs \
         --staging --manual-public-ip-logging-ok --agree-tos \
         --manual-auth-hook ${HHOME}/certbot_auth.sh --manual-cleanup-hook ${HHOME}/certbot_cleanup.sh
 else
     echo "Generating cert in production server..."
     certbot certonly -n -d "$DOMAIN" --manual -m "$EMAIL" --preferred-challenges=dns \
-        --config-dir ${HHOME}/config --work-dir ${HHOME}/work --logs-dir ${HHOME}/logs \
+        --config-dir ${HHOME}/letsencrypt --work-dir ${HHOME}/work --logs-dir ${HHOME}/logs \
         --manual-public-ip-logging-ok --agree-tos \
         --manual-auth-hook ${HHOME}/certbot_auth.sh --manual-cleanup-hook ${HHOME}/certbot_cleanup.sh
 fi
 # If debugging, show created certificates
 if [[ "$DEBUG" == "yes" ]]
 then
-    ls -al "${HHOME}/live/${DOMAIN}/"
-    cat "${HHOME}/live/${DOMAIN}/fullchain.pem"
-    cat "${HHOME}/live/${DOMAIN}/privkey.pem"
+    ls -al "${HHOME}/letsencrypt/live/${DOMAIN}/"
+    cat "${HHOME}/letsencrypt/live/${DOMAIN}/fullchain.pem"
+    cat "${HHOME}/letsencrypt/live/${DOMAIN}/privkey.pem"
     cat "${HHOME}/logs/letsencrypt/letsencrypt.log"
 fi
 # Variables to create AKV cert
-pem_file="${HHOME}/live/${DOMAIN}/fullchain.pem"
-key_file="${HHOME}/live/${DOMAIN}/privkey.pem"
+pem_file="${HHOME}/letsencrypt/live/${DOMAIN}/fullchain.pem"
+key_file="${HHOME}/letsencrypt/live/${DOMAIN}/privkey.pem"
 cert_name=$(echo "$DOMAIN" | tr -d '.')
 
 # Combine PEM and key in one pfx file (pkcs#12)
-pfx_file=".${pem_file}.pfx"
+pfx_file="${pem_file}.pfx"
 openssl pkcs12 -export -in "$pem_file" -inkey "$key_file" -out "$pfx_file" -passin pass:"$key_password" -passout pass:"$key_password"
 #
 if [[ "$KEYVAULT_SID" == "" ]] ;
