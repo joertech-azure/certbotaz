@@ -23,7 +23,7 @@ then
     ls -al "${HHOME}/letsencrypt/live/${DOMAIN}/"
     cat "${HHOME}/letsencrypt/live/${DOMAIN}/fullchain.pem"
     cat "${HHOME}/letsencrypt/live/${DOMAIN}/privkey.pem"
-    cat "${HHOME}/logs/letsencrypt/letsencrypt.log"
+    cat "${HHOME}/logs/letsencrypt.log"
 fi
 # Variables to create AKV cert
 pem_file="${HHOME}/letsencrypt/live/${DOMAIN}/fullchain.pem"
