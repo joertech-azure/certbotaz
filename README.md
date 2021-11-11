@@ -85,7 +85,7 @@ resource "azurerm_container_group" "certbotaz" {
             "KEYVAULT_SID" = module.tf-var-project.subscription_id_poc 
         }
     
-        commands =  ["/bin/bash", "-c", "/home/certbot_generate.sh" ]
+        commands =  ["/bin/bash", "-c", "/home/crtbot/certbot_generate.sh" ]
 
     }
 
