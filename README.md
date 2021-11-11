@@ -5,6 +5,10 @@ based on erjosito/certbot-azcli repository.
 
 - Removed -dev packages after installation of certbot, restulting conatainer image got reduced in size from 850 MB to 65MB.
 
+- Container is running under unprivelegd user, instead of root. 
+
+- All working dirs are placed in user's homedir. 
+
 - With an addition of possibility for dns-zonefile to be in a different subscription as where certbotaz container will be runnning and keyvault will be stored.
 
 - Can now also authenticate to azure via Service Principal, provided as an environment variable. 
