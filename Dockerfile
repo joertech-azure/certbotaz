@@ -27,6 +27,9 @@ RUN adduser -D crtbot ;\
     mkdir -p /home/crtbot/config ;\
     mkdir -p /home/crtbot/work ;\
     mkdir -p /etc/letsencrypt ; \
+    chown -R crtbot:crtbot /home/crtbot/logs ;\
+    chown -R crtbot:crtbot /home/crtbot/config ;\
+    chown -R crtbot:crtbot /home/crtbot/work ;\
     chown -R crtbot:root /etc/letsencrypt
 
 USER crtbot

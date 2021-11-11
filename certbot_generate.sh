@@ -20,14 +20,14 @@ fi
 # If debugging, show created certificates
 if [[ "$DEBUG" == "yes" ]]
 then
-    ls -al "/etc/letsencrypt/live/${DOMAIN}/"
-    cat "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
-    cat "/etc/letsencrypt/live/${DOMAIN}/privkey.pem"
-    cat "/var/log/letsencrypt/letsencrypt.log"
+    ls -al "${HHOME}/live/${DOMAIN}/"
+    cat "${HHOME}/live/${DOMAIN}/fullchain.pem"
+    cat "${HHOME}/live/${DOMAIN}/privkey.pem"
+    cat "${HHOME}/logs/letsencrypt/letsencrypt.log"
 fi
 # Variables to create AKV cert
-pem_file="/etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
-key_file="/etc/letsencrypt/live/${DOMAIN}/privkey.pem"
+pem_file="${HHOME}/live/${DOMAIN}/fullchain.pem"
+key_file="${HHOME}/live/${DOMAIN}/privkey.pem"
 cert_name=$(echo "$DOMAIN" | tr -d '.')
 
 # Combine PEM and key in one pfx file (pkcs#12)
