@@ -1,28 +1,16 @@
-FROM mcr.microsoft.com/azure-cli
-#RUN df | grep overlay
-RUN apk add python3 python3-dev py3-pip build-base libressl-dev musl-dev libffi-dev jq ;\
-    pip3 install pip --upgrade ;\
-    pip3 install certbot ;\
-    apk del python3-dev py3-pip build-base libressl-dev musl-dev libffi-dev
+FROM mcr.microsoft.com/azure-cli:2.36.0
 
-#RUN df | grep overlay
-#
-#
-#
-# FROM ubuntu:focal
-#
-# # RUN df  | grep overlay
-# RUN apt update && apt install -y certbot azure-cli && apt-get -y clean && rm -rf /var/lib/apt/lists/*
-# # #     az aks install-cli --install-location=$KUBEDIR/kubectl --kubelogin-install-location=$KUBEDIR/kubelogin
-# # RUN df | grep overlay
-#
-#ENV PATH=/home/aks-bin:$PATH
+RUN apk --no-cache add python3 python3-dev py3-pip build-base libressl-dev musl-dev libffi-dev jq ;\
+    pip3 install --no-cache-dir pip --upgrade ;\
+    pip3 install --no-cache-dir certbot certbot-dns-azure;\
+    apk --no-cache del python3-dev py3-pip build-base libressl-dev musl-dev libffi-dev
 
 COPY ./*.sh ./*.md /home/
 RUN adduser -D crtbot ;\
     mkdir -p /home/crtbot ;\
     mv /home/*.sh /home/*.md /home/crtbot/ ;\
     chmod -R a+x /home/crtbot/*.sh ;\
+    chown -R crtbot /home/crtbot/*.sh ;\
     mkdir -p /home/crtbot/logs ;\
     mkdir -p /home/crtbot/letsencrypt ;\
     mkdir -p /home/crtbot/work ;\
@@ -33,4 +21,4 @@ RUN adduser -D crtbot ;\
 USER crtbot
 
 # The following expects the env variables DOMAIN, EMAIL and AKV
-CMD ["bash", "-c", "/home/certbot_generate.sh"]
+CMD ["bash", "-c", "/home/crtbot/certbot_generate.sh"]
